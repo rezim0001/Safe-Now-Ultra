@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>SafeNow Ultra — Pro Safety App</title>
+<meta name="description" content="Ultra Pro Safety App — SOS, Shake-to-SOS, Safe Walk, Fake Call, Flashlight, Siren, WhatsApp share, PWA-ready. Requires HTTPS." />
+
+<link rel="manifest" href="manifest.json">
+
+<!-- Required for PWA -->
+<link rel="icon" href="icons/icon-192.png">
+<meta name="theme-color" content="#4b6eff">
+
+<!-- Register service-worker -->
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker Registered"))
+    .catch(err => console.log("SW Error:", err));
+}
+</script>
+
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>SafeNow Ultra</h1>
+        <div class="subtitle">Ultra Pro Safety — PWA-ready · Works best over HTTPS</div>
+      </div>
+      <div style="text-align:right">
+        <div class="small">Status: <span id="status">idle</span></div>
+        <div class="small" id="hint">Tap a control to grant permission</div>
+      </div>
+    </header>
+
+    <!-- Main SOS -->
+    <div class="grid" style="margin-top:18px">
+      <div class="card big" aria-live="polite">
+        <button id="sosMain" class="sosBtn" title="Press and hold for 3s (cancel on release)">SOS</button>
+        <div class="small">Press & hold to start 3 second countdown — release to cancel</div>
+        <div class="row" style="margin-top:8px">
+          <button class="btn" id="shareWhats">Share via WhatsApp</button>
+          <button class="btn" id="callEmergency">Call Emergency</button>
+          <button class="btn secondary" id="nearbyPolice">Find Nearby Police</button>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="card">
+        <h3>Shake-to-SOS</h3>
+        <div class="small">Enable automatic SOS on strong shake</div>
+        <div style="height:8px"></div>
+        <label class="switch"><input id="shakeToggle" type="checkbox"><span class="small">Enable</span></label>
+      </div>
+
+      <div class="card">
+        <h3>Safe Walk</h3>
+        <div class="small">Track location periodically; alerts if motion stops</div>
+        <div style="height:8px"></div>
+        <div class="row">
+          <button class="btn" id="startSafeWalk">Start</button>
+          <button class="btn secondary" id="stopSafeWalk">Stop</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Flashlight Blinker</h3>
+        <div class="small">Strobe the torch (Android only; requires camera permission)</div>
+        <div style="height:8px"></div>
+        <div class="row">
+          <button class="btn" id="flashOn">Start Strobe</button>
+          <button class="btn secondary" id="flashOff">Stop Strobe</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Alarm Siren</h3>
+        <div class="small">Play a loud siren (looping)</div>
+        <div style="height:8px"></div>
+        <div class="row">
+          <button class="btn" id="sirenOn">Play Siren</button>
+          <button class="btn secondary" id="sirenOff">Stop Siren</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Fake Call</h3>
+        <div class="small">Show fake incoming call UI</div>
+        <div style="height:8px"></div>
+        <div class="row">
+          <button class="btn" id="fakeCallBtn">Show Fake Call</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Voice Trigger</h3>
+        <div class="small">Enable voice detection to auto-trigger SOS (loud shout)</div>
+        <div style="height:8px"></div>
+        <label class="switch"><input id="voiceToggle" type="checkbox"><span class="small">Enable</span></label>
+      </div>
+
+      <div class="card">
+        <h3>Battery Saver Mode</h3>
+        <div class="small">Toggle low-power emergency mode</div>
+        <div style="height:8px"></div>
+        <label class="switch"><input id="batterySaver" type="checkbox"><span class="small">On</span></label>
+      </div>
+
+      <div class="card">
+        <h3>Permissions & Diagnostics</h3>
+        <div id="perms" class="small">No checks yet</div>
+        <div style="height:8px"></div>
+        <div class="row">
+          <button class="btn" id="checkPerms">Check Permissions</button>
+          <button class="btn secondary" id="openSettings">Open App Settings</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="output" class="card" style="margin-top:14px">
+      <strong>Output / Logs</strong>
+      <div id="log" style="margin-top:8px;color:var(--muted)">Ready</div>
+    </div>
+
+    <footer>
+      <div class="small"> © Rezim & SafeNow Ultra</div>
+    </footer>
+  </div>
+
+<!-- Fake call modal -->
+<div id="fakeModal" class="card" style="display:none;position:fixed;inset:0;margin:auto;width:320px;height:220px;left:0;right:0;top:120px;z-index:9999;box-shadow:0 40px 80px rgba(0,0,0,.4)">
+  <div style="padding:14px">
+    <div style="text-align:center">
+      <div style="font-size:20px;font-weight:700" id="fakeNameDisplay">Mom</div>
+      <div class="small" id="fakeNumberDisplay">+91 9xxxxxxxx</div>
+    </div>
+    <div style="height:12px"></div>
+    <div style="display:flex;gap:8px;justify-content:center">
+      <button class="btn" id="acceptFake">Accept</button>
+      <button class="btn secondary" id="declineFake">Decline</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

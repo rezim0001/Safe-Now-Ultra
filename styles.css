@@ -1,0 +1,27 @@
+:root{
+  --bg:#f5f7fa; --card:#fff; --accent:#4B6EFF; --danger:#FF3B30; --muted:#6b7280;
+  --success:#10b981;
+}
+*{box-sizing:border-box}
+body{margin:0; font-family:Inter,system-ui,Arial; background:var(--bg); color:#111; -webkit-font-smoothing:antialiased;}
+.app{max-width:900px;margin:18px auto;padding:18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{font-size:20px;margin:0}
+.subtitle{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.card{background:var(--card);border-radius:12px;padding:14px;border:1px solid #e6eefb;box-shadow:0 6px 18px rgba(15,23,42,0.04)}
+.big{grid-column: span 3; display:flex;gap:12px;align-items:center;justify-content:center;flex-direction:column;padding:22px}
+.sosBtn{width:150px;height:150px;border-radius:50%;border:none;background:linear-gradient(180deg,var(--danger),#ff6b66);color:#fff;font-size:30px;font-weight:700;box-shadow:0 10px 30px rgba(255,59,59,0.18);cursor:pointer}
+.btn{padding:10px 12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+.btn.secondary{background:#fff;color:#111;border:1px solid #e6eefb}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.small{font-size:13px;color:var(--muted)}
+#output{margin-top:12px}
+.switch{display:inline-flex;align-items:center;gap:8px}
+.switch input{width:40px;height:20px;appearance:none;background:#e6eefb;border-radius:999px;position:relative;outline:none;cursor:pointer}
+.switch input:checked{background:linear-gradient(90deg,var(--accent),#6C63FF)}
+.switch input::after{content:"";position:absolute;left:3px;top:3px;width:14px;height:14px;background:#fff;border-radius:50%;transition:all .18s}
+.switch input:checked::after{transform:translateX(20px)}
+footer{margin-top:16px;color:var(--muted);font-size:13px;text-align:center}
+@media(max-width:900px){ .grid{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:560px){ .grid{grid-template-columns:1fr} .big{grid-column:auto} .sosBtn{width:120px;height:120px;font-size:24px} }
